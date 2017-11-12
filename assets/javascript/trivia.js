@@ -22,10 +22,10 @@ function scoreQuiz(event) {
             }
         }
     }
-    quizOver=true;
+    quizOver = true;
     displayScore(score);
 }
-function displayScore(score){
+function displayScore(score) {
     $('#quizForm').hide();
     $('#scoreTime').text('You got ' + score + ' right out of 10!');
     $('#reset').show();
@@ -34,25 +34,33 @@ function updateClock() {
     timeLeft--;
     $('#gameClock').text(timeConverter(timeLeft));
 }
-function timeConverter (time){
+function timeConverter(time) {
     var minutes = 0;
     var seconds = 0;
-    while(time){
-        if(time>=60){
-            time-=60;
+    while (time) {
+        if (time >= 60) {
+            time -= 60;
             minutes++;
         }
-        else{
-            seconds=time;
-            time=0;
+        else {
+            seconds = time;
+            time = 0;
         }
     }
-    return minutes + ':' + (seconds>9 ? seconds : '0' + seconds);
+    return minutes + ':' + (seconds > 9 ? seconds : '0' + seconds);
 }
-var gameTimer = setTimeout(scoreQuiz, 1000*timeLeft);
+var gameTimer = setTimeout(scoreQuiz, 1000 * timeLeft);
 var gameClock = setInterval(updateClock, 1000);
 $('#submit').on('click', function (event) {
     event.preventDefault();
     clearTimeout(gameTimer);
     scoreQuiz(event);
 })
+$(window).on('blur', function () {
+    clearTimeout(gameTimer);
+    clearInterval(gameClock);
+});
+$(window).on('focus', function () {
+    gameTimer = setTimeout(scoreQuiz, 1000 * timeLeft);
+    gameClock = setInterval(updateClock, 1000);
+});
