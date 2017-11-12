@@ -11,11 +11,7 @@ var answers = {
     'answer9': 'b'
 };
 var timeLeft = 180;
-var quizOver = false;
 function scoreQuiz(event) {
-    if(quizOver){
-        return;
-    }
     clearInterval(gameClock);
     var score = 0;
     var formElements = document.forms[0].elements;
@@ -27,10 +23,16 @@ function scoreQuiz(event) {
         }
     }
     quizOver=true;
+    displayScore(score);
+}
+function displayScore(score){
+    $('#quizForm').hide();
+    $('#scoreTime').text('You got ' + score + ' right out of 10!');
+    $('#reset').show();
 }
 function updateClock() {
-    $('#gameClock').text(timeConverter(timeLeft));
     timeLeft--;
+    $('#gameClock').text(timeConverter(timeLeft));
 }
 function timeConverter (time){
     var minutes = 0;
@@ -47,7 +49,7 @@ function timeConverter (time){
     }
     return minutes + ':' + (seconds>9 ? seconds : '0' + seconds);
 }
-var gameTimer = setTimeout(scoreQuiz, 1000*60*3);
+var gameTimer = setTimeout(scoreQuiz, 1000*timeLeft);
 var gameClock = setInterval(updateClock, 1000);
 $('#submit').on('click', function (event) {
     event.preventDefault();
