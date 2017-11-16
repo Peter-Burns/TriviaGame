@@ -6,9 +6,7 @@ var answers = {
     'answer4': 'a',
     'answer5': 'b',
     'answer6': 'c',
-    'answer7': 'd',
-    'answer8': 'a',
-    'answer9': 'b'
+    'answer7': 'd'
 };
 var timeLeft = 180;
 function scoreQuiz(event) {
@@ -27,7 +25,7 @@ function scoreQuiz(event) {
 }
 function displayScore(score) {
     $('#quizForm').hide();
-    $('#scoreTime').text('You got ' + score + ' right out of 10!');
+    $('#scoreTime').text('You got ' + score + ' right out of 8!');
     $('#reset').show();
 }
 function updateClock() {
